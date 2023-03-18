@@ -1,0 +1,74 @@
+<button mat-raised-button color="primary" routerLink="/admin"><- POWRÓT</button>
+<div
+  class="d-flex flex-column align-items-center justify-center"
+  *ngIf="movieData$ | async as data"
+>
+  <h1 class="p-1 text-center">Dodaj nowy film</h1>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex flex-column">
+    <mat-form-field>
+      <input matInput placeholder="tytuł" formControlName="title" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="plakat - link" formControlName="imageUrl" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="gatunek" formControlName="genres" multiple>
+        <mat-option *ngFor="let genre of data.genres" [value]="genre.name">{{
+          genre.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select
+        placeholder="kategoria wiekowa"
+        formControlName="ageRestriction"
+      >
+        <mat-option
+          *ngFor="let restriction of data.ageRestrictions"
+          [value]="restriction.name"
+          >{{ restriction.name }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea
+        matInput
+        placeholder="krótki opis"
+        formControlName="descriptionShort"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea
+        matInput
+        placeholder="długi opis"
+        formControlName="descriptionLong"
+      ></textarea>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        numbersOnly
+        matInput
+        type="number"
+        placeholder="długość w min"
+        formControlName="duration"
+      />
+    </mat-form-field>
+    <mat-slide-toggle color="primary" formControlName="isPremiere"
+      >Premiera
+    </mat-slide-toggle>
+
+    <button
+      [disabled]="!form.valid"
+      mat-raised-button
+      color="primary"
+      class="mx-auto"
+    >
+      Add Movie
+    </button>
+  </form>
+</div>

@@ -1,0 +1,27 @@
+<button
+  class="mr-2"
+  mat-raised-button
+  color="primary"
+  routerLink="/movies-shows"
+>
+  <- POWRÓT
+</button>
+
+<h1 class="mt-4">Lista filmów które chcę obejrzeć</h1>
+
+<ng-container *ngIf="titles$ | async as titles">
+  <ng-container *ngIf="titles.length > 0">
+    <ol class="pl-4">
+      <li *ngFor="let movieTitle of titles" class="mt-2">
+        {{ movieTitle.title }}
+        <button
+          mat-fab
+          color="warn"
+          (click)="onDeleteFromWishList(movieTitle.titleId)"
+        >
+          <mat-icon>usuń</mat-icon>
+        </button>
+      </li>
+    </ol></ng-container
+  >
+</ng-container>

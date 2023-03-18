@@ -1,0 +1,16 @@
+<ng-container *ngIf="showings$ | async as showings; else noDataFound">
+  <h1 class="font-bold pb-1">Lista seansów</h1>
+  <a routerLink="/admin" class="inline-flex"> <- POWRÓT </a>
+  <div class="d-flex flex-wrap m-2">
+    <div
+      *ngFor="let showing of showings"
+      class="pr-3"
+      style="flex-basis: 300px"
+    >
+      <app-shows-list-item [showing]="showing"></app-shows-list-item>
+    </div>
+  </div>
+</ng-container>
+<ng-template #noDataFound>
+  <div>No data found</div>
+</ng-template>

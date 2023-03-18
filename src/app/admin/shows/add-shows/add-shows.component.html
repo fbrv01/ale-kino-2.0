@@ -1,0 +1,160 @@
+<button mat-raised-button color="primary" routerLink="/admin"><- POWRÓT</button>
+<ng-container *ngIf="dataForShowing$ | async as data; else loading">
+  <h1 class="pb-1 my-2 text-center">Dodaj nowy seans</h1>
+  <form
+    [formGroup]="addShowingForm"
+    (ngSubmit)="addShowing(data.movies)"
+    class="d-flex flex-column justify-content-between ml-5 mr-5"
+  >
+    <mat-form-field>
+      <mat-label>Film</mat-label>
+      <mat-select
+        formControlName="movieTitle"
+        (selectionChange)="
+          updateMovieId($event, data.movies); setTimeControlValues(data.movies)
+        "
+      >
+        <mat-option
+          [value]="movie.title"
+          *ngFor="let movie of data.movies; let index = index"
+          class="mt-2 title-option"
+          >{{ movie.title }} <img class="option-img" [src]="movie.imageUrl"
+        /></mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Data</mat-label>
+      <input
+        formControlName="date"
+        matInput
+        [disabled]="true"
+        [min]="tomorrow"
+        [matDatepicker]="picker"
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Godzina rozpoczęcia</mat-label>
+      <input
+        type="time"
+        matInput
+        formControlName="timeFrom"
+        (change)="setTimeControlValues(data.movies)"
+      />
+    </mat-form-field>
+    <p class="mb-4">
+      <b>Godzina zakończenia:</b
+      ><span
+        *ngIf="
+          movieTitleControl.dirty &&
+          timeFromControl.dirty &&
+          timeFromControl.valid
+        "
+        >{{ addShowingForm.controls.timeTo.value }}</span
+      >
+    </p>
+    <mat-form-field>
+      <mat-label>Przerwa po filmie</mat-label>
+      <input
+        matInput
+        appNumbersOnly
+        type="number"
+        formControlName="break"
+        (change)="setTimeControlValues(data.movies)"
+      />
+    </mat-form-field>
+    <p class="mb-4">
+      <strong>Sala dostępna po:</strong
+      ><span
+        *ngIf="
+          movieTitleControl.dirty &&
+          timeFromControl.dirty &&
+          timeFromControl.valid &&
+          breakControl.valid
+        "
+        >{{ addShowingForm.controls.availableHallTime.value }}</span
+      >
+    </p>
+
+    <mat-form-field>
+      <mat-label>Wybierz salę</mat-label>
+      <mat-select (selectionChange)="updateRowsAndColumns($event, data.halls)">
+        <mat-option
+          [value]="hall.name"
+          *ngFor="let hall of data.halls; let index = index"
+          >{{ hall.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p class="">
+      <b>Miejsca w rzędzie:</b> {{ addShowingForm.controls.columns.value }}
+    </p>
+    <p class=""><b>Rzędy:</b> {{ addShowingForm.controls.rows.value }}</p>
+    <ng-container *ngIf="addShowingForm.statusChanges | async">
+      <ng-container *ngIf="addShowingForm.valid && addShowingForm.touched">
+        <div class="d-flex mt-4 justify-content-center">
+          <mat-icon class="mr-2">check_circle_outline</mat-icon>
+          <p>Sala dostępna</p>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="addShowingForm.pending">
+        <div
+          class="d-flex flex-column align-items-center justify-content-center"
+        >
+          <p class="mb-2">Sprawdzanie dostępności sali</p>
+          <mat-spinner></mat-spinner>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="!addShowingForm.pending">
+      <div class="d-flex justify-content-center">
+        <button
+          [disabled]="!addShowingForm.valid"
+          mat-raised-button
+          color="primary"
+          class="w-36"
+        >
+          Dodaj seans
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="addShowingForm.errors as errors">
+      <ng-container *ngIf="errors['timeslotTaken']">
+        <p class="d-flex justify-content-center">
+          <mat-icon class="mr-2">info</mat-icon> W wybranej sali w tym czasie
+          odbywa się juz inny seans.
+        </p>
+        <div class="d-flex justify-content-center">
+          <button
+            type="button"
+            mat-raised-button
+            color="primary"
+            (click)="getShowings()"
+            class="w-36 mx-0"
+          >
+            Wyświetl
+          </button>
+        </div>
+
+        <ng-container *ngIf="showings$ | async as showings">
+          <div *ngFor="let showing of showings" class="m-2">
+            <app-shows-list-item [showing]="showing"></app-shows-list-item>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </form>
+</ng-container>
+<ng-template #loading>
+  <div class="d-flex align-items-center justify-content-center">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

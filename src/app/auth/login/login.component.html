@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-center py-10">
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="onSubmit()"
+    class="d-flex flex-column login-form"
+  >
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        formControlName="email"
+        placeholder="test@email.com"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Hasło</mat-label>
+      <input type="password" matInput formControlName="password" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="loginForm.invalid">
+      Login
+    </button>
+  </form>
+</div>

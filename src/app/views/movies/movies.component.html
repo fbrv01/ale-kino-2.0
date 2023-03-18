@@ -1,0 +1,85 @@
+<mat-button-toggle-group aria-label="week days" class="week-days">
+  <mat-button-toggle
+    *ngFor="let day of week"
+    [disabled]="day < today"
+    [checked]="day === chosenDate"
+    (click)="onDateChange(day)"
+    >{{ day }}
+  </mat-button-toggle></mat-button-toggle-group
+>
+
+<div class="m-5">
+  <ng-container *ngFor="let movie of movies$ | async">
+    <div class="movies d-flex p-2" style="gap: 10px">
+      <img [src]="movie.movieDetails?.imageUrl" style="width: 200px" />
+      <div class="movies-detail d-flex flex-column">
+        <div class="movie-name">{{ movie.movieDetails?.title }}</div>
+        <div class="movie-genres">
+          {{ movie.movieDetails?.genres }} |
+          {{ movie.movieDetails?.ageRestriction }} |
+          {{ movie.movieDetails?.duration }} min
+        </div>
+        <div class="movie-desc">
+          <strong>Krótki opis:</strong>
+          {{ movie.movieDetails?.descriptionShort }}
+        </div>
+        <div class="movie-desc">
+          <strong>Długi opis:</strong> {{ movie.movieDetails?.descriptionLong }}
+        </div>
+        <div class="movie-desc"><strong>Ocena:</strong> 9.2</div>
+        <div class="d-flex">
+          <button
+            class="mr-2"
+            mat-raised-button
+            color="primary"
+            [routerLink]="['/shows/', show.showingId]"
+            *ngFor="let show of movie.showings"
+          >
+            {{ show.timeFrom }}
+          </button>
+        </div>
+        <div class="d-flex" *ngIf="user$ | async as user">
+          <div
+            class="mr-2"
+            color="primary"
+            routerLink="login"
+            *ngIf="user.role === 'User'"
+          >
+            <ng-container
+              *ngIf="
+                onWatchlist(movie.movieDetails?.title + '');
+                else addToWishList
+              "
+            >
+              <a routerLink="/wishlist">Zapisany na liście Chcę obejrzeć</a>
+            </ng-container>
+
+            <ng-template #addToWishList
+              ><button
+                mat-raised-button
+                color="primary"
+                (click)="
+                  onUpdateWatchlist(
+                    movie.movieDetails?.title + '',
+                    movie.movieDetails?.id + ''
+                  )
+                "
+              >
+                Dodaj na listę Chcę obejrzeć
+              </button></ng-template
+            >
+          </div>
+          <button
+            class="mr-2"
+            mat-raised-button
+            color="primary"
+            routerLink="login"
+            *ngIf="user.role === 'User'"
+          >
+            Oceńa film
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

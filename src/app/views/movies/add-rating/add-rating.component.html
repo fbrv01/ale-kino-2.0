@@ -1,0 +1,29 @@
+<div style="height: 50px" class="d-flex align-items-center">
+  <div *ngIf="ratingList$ | async as movieRating">
+    <h2 *ngIf="ratingBtnDisable">Ocena: {{ movieRating }}</h2>
+  </div>
+  <button
+    class="mr-2"
+    mat-raised-button
+    color="primary"
+    (click)="showRater = !showRater"
+    *ngIf="role === 'User' && !ratingBtnDisable"
+  >
+    Dodaj ocenę
+  </button>
+  <div
+    class="rater d-flex align-items-center p-2"
+    *ngIf="showRater"
+    style="border: 1px solid; gap: 25px"
+  >
+    <mat-slider min="1" max="10" step="1" value="1">
+      <input matSliderThumb [(ngModel)]="ratingValue" />
+    </mat-slider>
+    <div>
+      <strong>{{ ratingValue }} </strong>
+    </div>
+    <button mat-raised-button color="primary" (click)="setRating()">
+      Wyślij
+    </button>
+  </div>
+</div>

@@ -5,8 +5,8 @@
     [checked]="day === chosenDate"
     (click)="onDateChange(day)"
     >{{ day }}
-  </mat-button-toggle></mat-button-toggle-group
->
+  </mat-button-toggle>
+</mat-button-toggle-group>
 
 <div class="m-5">
   <ng-container *ngFor="let movie of movies$ | async">
@@ -26,7 +26,6 @@
         <div class="movie-desc">
           <strong>Długi opis:</strong> {{ movie.movieDetails?.descriptionLong }}
         </div>
-        <div class="movie-desc"><strong>Ocena:</strong> 9.2</div>
         <div class="d-flex">
           <button
             class="mr-2"
@@ -38,24 +37,19 @@
             {{ show.timeFrom }}
           </button>
         </div>
-        <div class="d-flex" *ngIf="user$ | async as user">
-          <div
-            class="mr-2"
-            color="primary"
-            routerLink="login"
-            *ngIf="user.role === 'User'"
-          >
+        <div class="d-flex align-items-center" *ngIf="user$ | async as user">
+          <div class="mr-2" color="primary" *ngIf="user.role === 'User'">
             <ng-container
               *ngIf="
                 onWatchlist(movie.movieDetails?.title + '');
                 else addToWishList
               "
             >
-              <a routerLink="/wishlist">Zapisany na liście Chcę obejrzeć</a>
+              <a routerLink="/wishlist">Zapisany na liście "chcę obejrzeć"</a>
             </ng-container>
 
-            <ng-template #addToWishList
-              ><button
+            <ng-template #addToWishList>
+              <button
                 mat-raised-button
                 color="primary"
                 (click)="
@@ -65,19 +59,15 @@
                   )
                 "
               >
-                Dodaj na listę Chcę obejrzeć
-              </button></ng-template
-            >
+                "Chcę obejrzeć"
+              </button>
+            </ng-template>
           </div>
-          <button
-            class="mr-2"
-            mat-raised-button
-            color="primary"
-            routerLink="login"
-            *ngIf="user.role === 'User'"
-          >
-            Oceńa film
-          </button>
+          <app-add-rating
+            *ngIf="movie.movieDetails?.id"
+            [movieId]="movie.movieDetails?.id + ''"
+            [role]="user.role"
+          ></app-add-rating>
         </div>
       </div>
     </div>

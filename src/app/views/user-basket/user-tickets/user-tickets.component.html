@@ -1,0 +1,19 @@
+<h1>Twoje bilety</h1>
+
+<ng-container *ngIf="userTickets$ | async as userOrders">
+  <ng-container *ngIf="userOrders.length > 0">
+    <ol class="user-tickets-container p-2">
+      <ng-container *ngFor="let userOrder of userOrders">
+        <li>
+          <h2 class="user-tickets-container__order-num mt-2">
+            <a [routerLink]="['/tickets/', userOrder.orderID]">
+              zamówienie numer: {{ userOrder.orderID }} date:
+              {{ userOrder.date }}
+            </a>
+          </h2>
+        </li>
+        <p>Ilość biletów: {{ userOrder.tickets.length }}</p>
+      </ng-container>
+    </ol></ng-container
+  >
+</ng-container>

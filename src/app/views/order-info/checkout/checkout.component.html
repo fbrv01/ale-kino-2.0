@@ -1,0 +1,62 @@
+<app-cart></app-cart>
+
+<form [formGroup]="checkoutForm" (ngSubmit)="sendForm()" class="mt-2">
+  <fieldset>
+    <mat-form-field class="full-width">
+      <mat-label>Imię</mat-label>
+      <input matInput formControlName="firstName" /> </mat-form-field
+    ><mat-form-field>
+      <mat-label>Nazwisko</mat-label
+      ><input matInput formControlName="lastName" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Numer telefonu</mat-label>
+      <input type="tel" appNumbersOnly matInput formControlName="phoneNumber" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input type="email" matInput formControlName="email" /> </mat-form-field
+    ><mat-form-field>
+      <mat-label>Potwierdź email</mat-label>
+      <input type="email" matInput formControlName="confirmEmail" />
+    </mat-form-field>
+
+    <mat-slide-toggle
+      [checked]="true"
+      color="primary"
+      formControlName="newsletter"
+      >Chcę otrzymywać informacje o promocjach i premierach.
+    </mat-slide-toggle>
+
+    <mat-form-field class="full-width mb-1">
+      <mat-label>Kod kuponu</mat-label>
+      <input matInput formControlName="couponCode" />
+
+      <mat-error *ngIf="couponCodeCtrl.errors">
+        <span *ngIf="couponCodeCtrl.hasError('minlength')"
+          >Powinien mieć przynajmniej
+          {{ couponCodeCtrl.errors!["minlength"]["requiredLength"] }}
+          znaków</span
+        >
+
+        <span
+          *ngIf="
+            couponCodeCtrl.errors && couponCodeCtrl.errors['couponInvalid']
+          "
+        >
+          Błędny kod kuponu </span
+        ><span
+          *ngIf="couponCodeCtrl.errors && couponCodeCtrl.errors['couponUsed']"
+        >
+          Kod kuponu został już użyty.
+        </span>
+      </mat-error>
+    </mat-form-field>
+
+    <button [disabled]="!checkoutForm.valid" mat-raised-button color="primary">
+      Zamów
+    </button>
+  </fieldset>
+</form>
+
+<router-outlet></router-outlet>

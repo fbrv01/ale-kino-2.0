@@ -1,0 +1,23 @@
+button {
+  display: block;
+}
+form {
+  margin-top: 1rem;
+}
+:host,
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+:host {
+  background-color: #ffffff;
+  width: fit-content;
+  padding: clamp(5rem, 6vw, 9rem);
+  margin-top: 2rem;
+  margin-inline: auto;
+  border-radius: 10px;
+}
+:host > * {
+  margin-top: 1rem;
+}

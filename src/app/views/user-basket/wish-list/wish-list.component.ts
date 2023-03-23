@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
+import { RouterModule } from "@angular/router";
 import { WishListService } from "./wish-list.service";
 
 @Component({
@@ -9,7 +10,7 @@ import { WishListService } from "./wish-list.service";
   standalone: true,
   templateUrl: "./wish-list.component.html",
   styleUrls: [],
-  imports: [CommonModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule, RouterModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class WishListComponent {

@@ -3,7 +3,6 @@ import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { AddMovieComponent } from "./add-movie.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { NumberDirective } from "src/app/shared/directives/numbers-only.directive";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatButtonModule } from "@angular/material/button";

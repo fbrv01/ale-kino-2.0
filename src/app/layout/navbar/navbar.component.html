@@ -1,5 +1,5 @@
 <div class="app-navbar d-flex align-items-center justify-content-between p-2">
-  <div class="logo">Ale Kino wersja 1.9</div>
+  <div class="logo">Ale Kino</div>
   <div class="top-icons d-flex align-items-center">
     <button
       class="mr-2"
@@ -16,6 +16,7 @@
         color="primary"
         class="mr-2"
         *ngIf="user.role !== 'Admin'"
+        routerLink="/user-tickets"
       >
         <mat-icon>add_shopping_cart</mat-icon>
       </button>
@@ -26,7 +27,7 @@
         routerLink="/wishlist"
         *ngIf="user.role !== 'Admin'"
       >
-        Chcę zobaczyć
+        Lista "chcę obejrzeć"
       </button>
       <div class="mr-2">{{ user.firstName + " " + user.lastName }}</div>
       <button

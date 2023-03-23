@@ -1,0 +1,10 @@
+<ng-container *ngIf="showsInfo"
+  ><strong>
+    {{ showsInfo.movieTitle }}/ {{ showsInfo.date | slice : 0 : 10 }},
+    {{
+      showsInfo.timeFrom[0] !== "0"
+        ? showsInfo.timeFrom
+        : (showsInfo.timeFrom | slice : 1)
+    }}
+  </strong>
+</ng-container>

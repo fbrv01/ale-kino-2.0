@@ -29,6 +29,33 @@ const routes: Routes = [
             loadComponent: () =>
               import("./views/user-basket/wish-list/wish-list.component"),
           },
+          {
+            path: "user-tickets",
+            loadComponent: () =>
+              import("./views/user-basket/user-tickets/user-tickets.component"),
+          },
+          {
+            path: "shows/:id",
+            loadChildren: () =>
+              import("./views/order-info/tickets/tickets.module"),
+          },
+          {
+            path: "cart",
+            loadComponent: () =>
+              import("./views/order-info/cart/cart.component"),
+          },
+          {
+            path: "checkout",
+            loadChildren: () =>
+              import("./views/order-info/checkout/checkout.module"),
+          },
+          {
+            path: "tickets/:id",
+            loadComponent: () =>
+              import(
+                "./views/order-info/order-information/order-information.component"
+              ),
+          },
         ],
       },
       { path: "login", component: LoginComponent },

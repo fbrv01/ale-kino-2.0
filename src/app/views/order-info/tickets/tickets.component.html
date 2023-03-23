@@ -1,0 +1,89 @@
+<ng-container *ngIf="showingDetails$ | async as showingDetails"
+  ><app-showing-details
+    class="leading-relaxed"
+    [showsInfo]="showingDetails"
+  ></app-showing-details>
+
+  <app-seat
+    [showingId]="showingIdFromRoute"
+    (chooseSeat)="handleSeatReservation($event.row, $event.column)"
+  ></app-seat>
+
+  <ng-container *ngIf="myTicketInfoForm.controls.tickets.controls.length > 0">
+    <form [formGroup]="myTicketInfoForm" (ngSubmit)="submit(showingDetails)">
+      <ol
+        *ngFor="
+          let ticket of myTicketInfoForm.controls.tickets.controls;
+          let index = index
+        "
+      >
+        <div [formGroup]="ticket">
+          <fieldset class="tickets-field d-flex align-items-center flex-wrap">
+            <legend>Bilety</legend>
+            <span>Rząd {{ ticket.controls.rowSeat.value }}</span>
+            <span> Miejsce {{ ticket.controls.columnSeat.value }}</span>
+            <mat-form-field appearance="fill">
+              <mat-label>Wybierz typ biletu</mat-label>
+              <mat-select
+                formControlName="ticketTypeName"
+                (selectionChange)="updateTicketPrice(index, $event)"
+              >
+                <mat-option
+                  [value]="ticketType.name"
+                  *ngFor="let ticketType of ticketTypes; let index = index"
+                  >{{ ticketType.name }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+            <div class="flex flex-nowrap">
+              <p>Cena: {{ ticket.controls.ticketPrice.value }} PLN</p>
+
+              <ng-container *ngIf="!ticket.controls.inCart.value"
+                ><button
+                  class="mx-4 my-0"
+                  (click)="
+                    deleteTicket(
+                      index,
+                      ticket.controls.rowSeat.value,
+                      ticket.controls.columnSeat.value
+                    )
+                  "
+                >
+                  <mat-icon>close</mat-icon>
+                </button></ng-container
+              >
+            </div>
+            <ng-container *ngIf="ticket.controls.inCart.value"
+              ><p>Bilety w koszyku</p>
+              <button
+                mat-raised-button
+                color="primary"
+                type="button"
+                [disabled]="!this.ticket.dirty"
+                (click)="
+                  updateTicket(
+                    ticket.controls.id.value,
+                    ticket.controls.ticketTypeName.value,
+                    ticket.controls.ticketPrice.value,
+                    ticket.controls.userID.value,
+                    index
+                  )
+                "
+              >
+                Zaktualizuj swój bilet
+              </button>
+            </ng-container>
+          </fieldset>
+        </div>
+      </ol>
+
+      <p class="text-body-big">Suma: {{ totalPrice }} PLN</p>
+      <button class="mr-2" mat-raised-button color="primary">
+        Dodaj do koszyka
+      </button>
+      <ng-container *ngIf="(cart$ | async)!.length"
+        ><a routerLink="/checkout">Zobacz zamówienie tutaj -></a></ng-container
+      >
+    </form>
+  </ng-container>
+</ng-container>

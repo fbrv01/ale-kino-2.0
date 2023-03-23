@@ -1,0 +1,37 @@
+<ng-container *ngIf="payment as data">
+  <p>
+    Suma: $<strong>{{ data.cart | number : "1.2-2" }}</strong>
+  </p>
+
+  <ng-container *ngIf="data.couponRate.couponRate < 1">
+    <div>
+      Kod zniżkowy: -
+      <span
+        appMultiply
+        [multiplyBy]="1 - data.couponRate.couponRate"
+        [valueToMultiply]="data.cart"
+        >{{ data.cart }}</span
+      >
+      PLN
+    </div>
+    <div>
+      Do zapłaty
+      <span
+        appMultiply
+        [multiplyBy]="data.couponRate.couponRate"
+        [valueToMultiply]="data.cart"
+        >{{ data.cart | number : "1.2-2" }}</span
+      >
+      PLN
+    </div>
+  </ng-container>
+
+  <a
+    *ngIf="url === '/cart'"
+    mat-raised-button
+    color="primary"
+    routerLink="/checkout"
+    class="mt-2 inline-block"
+    >Zobacz zamówienia</a
+  ></ng-container
+>

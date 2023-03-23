@@ -45,7 +45,7 @@ export class MovieService {
     return of([
       {
         id: 1,
-        name: "Drama",
+        name: "Dramat",
       },
       {
         id: 2,
@@ -57,7 +57,7 @@ export class MovieService {
       },
       {
         id: 4,
-        name: "Comedy",
+        name: "Komedia",
       },
       {
         id: 5,

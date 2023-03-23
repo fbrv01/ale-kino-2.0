@@ -4,10 +4,10 @@
   color="primary"
   routerLink="/movies-shows"
 >
-  <- POWRÓT
+  <- Back
 </button>
 
-<h1 class="mt-4">Lista filmów które chcę obejrzeć</h1>
+<h1 class="mt-4">Movies Wish List</h1>
 
 <ng-container *ngIf="titles$ | async as titles">
   <ng-container *ngIf="titles.length > 0">
@@ -19,7 +19,7 @@
           color="warn"
           (click)="onDeleteFromWishList(movieTitle.titleId)"
         >
-          <mat-icon>usuń</mat-icon>
+          <mat-icon>delete</mat-icon>
         </button>
       </li>
     </ol></ng-container

@@ -1,6 +1,6 @@
-<button mat-raised-button color="primary" routerLink="/admin"><- POWRÓT</button>
+<button mat-raised-button color="primary" routerLink="/admin"><- powrót</button>
 <ng-container *ngIf="dataForShowing$ | async as data; else loading">
-  <h1 class="pb-1 my-2 text-center">Dodaj nowy seans</h1>
+  <h1 class="pb-1 my-2 text-center">Dodaj seans</h1>
   <form
     [formGroup]="addShowingForm"
     (ngSubmit)="addShowing(data.movies)"
@@ -24,7 +24,7 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Data</mat-label>
+      <mat-label>Data seansu</mat-label>
       <input
         formControlName="date"
         matInput
@@ -40,7 +40,7 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Godzina rozpoczęcia</mat-label>
+      <mat-label>Początek seansu</mat-label>
       <input
         type="time"
         matInput
@@ -49,7 +49,7 @@
       />
     </mat-form-field>
     <p class="mb-4">
-      <b>Godzina zakończenia:</b
+      <b>Koniec seansu:</b
       ><span
         *ngIf="
           movieTitleControl.dirty &&
@@ -70,7 +70,7 @@
       />
     </mat-form-field>
     <p class="mb-4">
-      <strong>Sala dostępna po:</strong
+      <strong>Sala dostępna od:</strong
       ><span
         *ngIf="
           movieTitleControl.dirty &&
@@ -93,9 +93,11 @@
       </mat-select>
     </mat-form-field>
     <p class="">
-      <b>Miejsca w rzędzie:</b> {{ addShowingForm.controls.columns.value }}
+      <b>Ilość miejsc w rzędzie:</b> {{ addShowingForm.controls.columns.value }}
     </p>
-    <p class=""><b>Rzędy:</b> {{ addShowingForm.controls.rows.value }}</p>
+    <p class="">
+      <b>Ilość rzędów:</b> {{ addShowingForm.controls.rows.value }}
+    </p>
     <ng-container *ngIf="addShowingForm.statusChanges | async">
       <ng-container *ngIf="addShowingForm.valid && addShowingForm.touched">
         <div class="d-flex mt-4 justify-content-center">
@@ -107,7 +109,7 @@
         <div
           class="d-flex flex-column align-items-center justify-content-center"
         >
-          <p class="mb-2">Sprawdzanie dostępności sali</p>
+          <p class="mb-2">Sprawdzam dostępność sali</p>
           <mat-spinner></mat-spinner>
         </div>
       </ng-container>
@@ -129,8 +131,8 @@
     <ng-container *ngIf="addShowingForm.errors as errors">
       <ng-container *ngIf="errors['timeslotTaken']">
         <p class="d-flex justify-content-center">
-          <mat-icon class="mr-2">info</mat-icon> W wybranej sali w tym czasie
-          odbywa się juz inny seans.
+          <mat-icon class="mr-2">info</mat-icon> W wybranej sali odbywa się inny
+          seans w tym czasie.
         </p>
         <div class="d-flex justify-content-center">
           <button
@@ -140,7 +142,7 @@
             (click)="getShowings()"
             class="w-36 mx-0"
           >
-            Wyświetl
+            Pokaz seanse
           </button>
         </div>
 

@@ -1,0 +1,49 @@
+<p class="m-3 flex" style="gap: 5px">
+  <mat-icon class="overflow-visible">info</mat-icon
+  ><strong>
+    Bilety w koszyku rezerwowane są na 15 minut. Sfinalizuj zakup!</strong
+  >
+</p>
+<ng-container *ngIf="cart$ | async as cart">
+  <ol class="pl-4 mt-2">
+    <li *ngFor="let item of cart; let index = index" class="mt-1">
+      {{ item.ticketTypeName }},Cena: {{ item.ticketPrice }}, Miejsce:
+      {{ item.rowSeat }}{{ item.columnSeat }}
+      <ng-container *ngIf="item.showingId">
+        <a
+          mat-raised-button
+          color="primary"
+          [routerLink]="['/showing/', item.showingId]"
+        >
+          <app-showing-details
+            class="leading-normal"
+            [showingId]="item.showingId"
+            [showsInfo]="item.showingDetails"
+          ></app-showing-details></a
+      ></ng-container>
+      <button
+        *ngIf="routerUrl === '/cart'"
+        mat-raised-button
+        color="primary"
+        (click)="
+          onRemoveFromCart(
+            item.id,
+            item.rowSeat,
+            item.columnSeat,
+            item.showingId,
+            item.userID
+          )
+        "
+        mat-raised-button
+        color="warn"
+        class="ml-2"
+      >
+        Usuń
+      </button>
+    </li>
+  </ol>
+
+  <ng-container *ngIf="cart.length > 0">
+    <app-cart-price [payment]="(paymentData$ | async)!"></app-cart-price>
+  </ng-container>
+</ng-container>

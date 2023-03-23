@@ -1,0 +1,17 @@
+<div class="rows" *ngFor="let row of rows$ | async">
+  <span class="row">{{ row }} </span>
+  <span
+    class="column-seats"
+    *ngFor="let column of columns$ | async; let index = index"
+    [ngClass]="
+      onCheckBookedSeats(row, column)
+        ? 'booked-seat'
+        : onCheckReservedSeats(row, column)
+        ? 'reserved-seat'
+        : ''
+    "
+    (click)="onChooseSeat(row, column)"
+  >
+    {{ column }}
+  </span>
+</div>

@@ -1,0 +1,15 @@
+<ng-container *ngIf="orderTickets$ | async as order">
+  <h1>
+    <strong>Numer zamówienia:</strong> {{ order[0].orderID
+    }}<strong> Data</strong>
+    {{ order[0].date }}
+  </h1>
+
+  <ol>
+    <li *ngFor="let ticket of order[0].tickets" class="my-2">
+      {{ ticket.ticketTypeName }}, Cena: {{ ticket.ticketPrice }}PLN, Miejsce
+      {{ ticket.rowSeat }}{{ ticket.columnSeat }}<br />
+      <app-showing-details [showingId]="ticket.showingID"></app-showing-details>
+    </li>
+  </ol>
+</ng-container>

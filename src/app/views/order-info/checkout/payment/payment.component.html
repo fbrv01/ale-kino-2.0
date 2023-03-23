@@ -1,0 +1,36 @@
+<ng-container *ngIf="notPaid && !showSpinner">
+  <div>
+    <p>{{ INPUT_LENGTH }} cyfrowy kod BLIK</p>
+  </div>
+
+  <form [formGroup]="blikForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="text-3xl w-36 blik-form">
+      <input appNumbersOnly type="text" matInput formControlName="blikNum" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="!blikForm.valid">
+      Kwota:
+      <ng-container *ngIf="paymentData$ | async as data">
+        <span
+          appMultiply
+          [multiplyBy]="data.couponRate.couponRate"
+          [valueToMultiply]="data.cart"
+          >{{ data.cart | number : "1.2-2" }}</span
+        >
+        PLN
+      </ng-container>
+    </button>
+  </form>
+</ng-container>
+<ng-container *ngIf="showSpinner">
+  <p>!! Płatność procesowana !!</p>
+  <mat-spinner></mat-spinner>
+</ng-container>
+<ng-container *ngIf="!notPaid">
+  <p>Płatność zakończona sukcesem</p>
+  <mat-icon class="success-icon">check_circle_outline</mat-icon>
+
+  <a [routerLink]="['/tickets/', orderID]">
+    Przejdź do podsumowania zamówienia.
+  </a>
+</ng-container>

@@ -17,6 +17,7 @@ export class MoviesComponent implements OnInit {
   week = this.datesService.getCurrentWeek();
   movies$ = this.showingsService.showings$;
   chosenDate = "";
+
   user$!: Observable<User | null>;
   constructor(
     private showingsService: MoviesShowingService,

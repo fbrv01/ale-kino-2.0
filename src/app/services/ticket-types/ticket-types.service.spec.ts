@@ -1,14 +1,14 @@
 import {
   HttpTestingController,
   HttpClientTestingModule,
-} from "@angular/common/http/testing";
-import { TestBed } from "@angular/core/testing";
-import { environment } from "src/app/shared/constants/urls";
-import { TicketType } from "src/app/shared/interfaces/ticket-type";
+} from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
+import { environment } from 'src/app/shared/constants/urls';
+import { TicketType } from 'src/app/shared/interfaces/ticket-type';
 
-import { TicketTypesService } from "./ticket-types.service";
+import { TicketTypesService } from './ticket-types.service';
 
-describe("TicketTypesService", () => {
+describe('TicketTypesService', () => {
   let service: TicketTypesService;
   let httpMock: HttpTestingController;
   beforeEach(() => {
@@ -24,20 +24,20 @@ describe("TicketTypesService", () => {
     httpMock.verify();
   });
 
-  it("should be created", () => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it("should be able to retrieve all ticketTypes from getAll()", () => {
+  it('should be able to retrieve all ticketTypes from getAll()', () => {
     const ticketTypes: TicketType[] = [
       {
         id: 1,
-        name: "Normal ticket",
+        name: 'Normalny',
         price: 25,
       },
       {
         id: 2,
-        name: "Family ticket",
+        name: 'Karta dużej rodziny',
         price: 20,
       },
     ];
@@ -48,7 +48,7 @@ describe("TicketTypesService", () => {
     const request = httpMock.expectOne(
       environment.baseUrl + environment.ticketTypes
     );
-    expect(request.request.method).toBe("GET");
+    expect(request.request.method).toBe('GET');
     request.flush(ticketTypes);
   });
 });

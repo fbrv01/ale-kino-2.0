@@ -1,9 +1,9 @@
-<button mat-raised-button color="primary" routerLink="/admin"><- POWRÓT</button>
+<button mat-raised-button color="primary" routerLink="/admin"><- powrót</button>
 <div
-  class="d-flex flex-column align-items-center justify-center"
+  class="d-flex flex-column justify-content-between ml-5 mr-5"
   *ngIf="movieData$ | async as data"
 >
-  <h1 class="p-1 text-center">Dodaj nowy film</h1>
+  <h1 class="p-1 text-center">Dodaj film</h1>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex flex-column">
     <mat-form-field>
@@ -11,10 +11,10 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="plakat - link" formControlName="imageUrl" />
+      <input matInput placeholder="link plakatu" formControlName="imageUrl" />
     </mat-form-field>
     <mat-form-field>
-      <mat-select placeholder="gatunek" formControlName="genres" multiple>
+      <mat-select placeholder="kategorie" formControlName="genres" multiple>
         <mat-option *ngFor="let genre of data.genres" [value]="genre.name">{{
           genre.name
         }}</mat-option>
@@ -23,7 +23,7 @@
 
     <mat-form-field>
       <mat-select
-        placeholder="kategoria wiekowa"
+        placeholder="ograniczenia wiekowe"
         formControlName="ageRestriction"
       >
         <mat-option
@@ -54,7 +54,7 @@
         numbersOnly
         matInput
         type="number"
-        placeholder="długość w min"
+        placeholder="czas trwania w minutach"
         formControlName="duration"
       />
     </mat-form-field>
@@ -68,7 +68,7 @@
       color="primary"
       class="mx-auto"
     >
-      Add Movie
+      Dodaj film
     </button>
   </form>
 </div>

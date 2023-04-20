@@ -1,5 +1,5 @@
 export const environment = {
-  baseUrl: "https://alekinojson.herokuapp.com/",
+  baseUrl: "https://immense-gaudy-point.glitch.me/",
   users: "users",
   movies: "movies",
   showings: "showings",
